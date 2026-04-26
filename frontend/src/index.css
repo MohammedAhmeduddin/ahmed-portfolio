@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #05070d;
+  color: white;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counter-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.orbit {
+  animation: orbit 90s linear infinite;
+}
+
+.orbit-slow {
+  animation: orbit 130s linear infinite;
+}
+
+.counter-orbit {
+  animation: counter-orbit 90s linear infinite;
+}
+
+.float-soft {
+  animation: float-soft 4s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .orbit,
+  .counter-orbit {
+    animation: none;
+  }
+}
+.space-bg {
+  background-image:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(168, 85, 247, 0.18),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(59, 130, 246, 0.15),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      rgba(236, 72, 153, 0.12),
+      transparent 25%
+    ),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    55px 55px;
+  background-attachment: fixed;
+}
+
+.space-bg:hover {
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    48px 48px;
+}
+@keyframes space-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 220px 440px;
+  }
+}
+
+.space-stars {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.38) 1px,
+    transparent 1px
+  );
+  background-size: 45px 45px;
+  animation: space-drift 30s linear infinite;
+}
