@@ -1,114 +1,75 @@
-# Ahmeduddin Mohammed — Engineering Portfolio
+# React + TypeScript + Vite
 
-Live → https://ahmed-portfolio-blue.vercel.app
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## Overview
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-This is a product-focused engineering portfolio showcasing backend systems, AI-driven applications, and full-stack projects.
+## React Compiler
 
-The goal is to present projects not just as features, but as systems — focusing on problem-solving, design decisions, and real-world usability.
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
 
----
+Note: This will impact Vite dev & build performances.
 
-## What I Focus On
+## Expanding the ESLint configuration
 
-- Backend system design and APIs
-- AI-driven workflows (RAG, structured outputs)
-- Full-stack applications with clean UI and data flow
-- Building scalable and maintainable systems
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default defineConfig([
+  globalIgnores(["dist"]),
+  {
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      // Other configs...
 
-## Selected Work
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### AI Financial Report Analyst
-
-A system that extracts financial data and explains variance using retrieval-augmented generation (RAG).
-
-- Built structured pipelines for data extraction and reasoning
-- Focus on explainability and real-world financial use
-
-Live → https://ai-financial-report-analyst-fawn.vercel.app
-Code → https://github.com/MohammedAhmeduddin/quarterly-financial-variance-analyzer
-
----
-
-### Developer Portfolio Tracker
-
-A dashboard for tracking developer profiles and analytics.
-
-- Built filtering, charting, and structured UI workflows
-- Focus on usability and data visualization
-
-Live → https://developer-portfolio-tracker.vercel.app
-Code → https://github.com/MohammedAhmeduddin/developer-portfolio-tracker
-
----
-
-### User Management System
-
-A backend system for authentication and user workflows.
-
-- JWT-based authentication
-- Role-based access and validation
-- Dockerized and tested APIs
-
-Code → https://github.com/MohammedAhmeduddin/user_management
-
----
-
-## Tech Stack
-
-Frontend
-React · TypeScript · Vite · Tailwind CSS
-
-Backend
-FastAPI · Flask · REST APIs · JWT
-
-Databases
-PostgreSQL · MySQL · SQLite
-
-AI / Data
-OpenAI API · RAG · Pandas · NumPy
-
-DevOps & Tools
-Docker · GitHub Actions · Vercel · Postman
-
----
-
-## Local Setup
-
-Clone the repository:
-
-```bash
-git clone https://github.com/MohammedAhmeduddin/ahmed-portfolio.git
-cd ahmed-portfolio/frontend
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+]);
 ```
 
-## Install dependencies:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-npm install
+```js
+// eslint.config.js
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
-## Run locally:
-
-npm run dev
-
-## Build for production:
-
-npm run build
-
-## Deployment
-
-Deployed on Vercel using a standard Vite build.
-
-## Contact
-
-Email → mohammed.ahmeduddin16@gmail.com
-LinkedIn → https://www.linkedin.com/in/mohammed-ahmeduddin/
-GitHub → https://github.com/MohammedAhmeduddin
-
-## Closing
-
-I focus on building systems that are reliable, scalable, and easy to extend — not just features that work once.
+export default defineConfig([
+  globalIgnores(["dist"]),
+  {
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs["recommended-typescript"],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+]);
+```
