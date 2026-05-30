@@ -1,35 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function SpaceHoverBackground() {
-  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const meshRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setPosition({
-        x: (event.clientX / window.innerWidth) * 100,
-        y: (event.clientY / window.innerHeight) * 100,
-      });
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!meshRef.current) return;
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      meshRef.current.style.background = `
+        radial-gradient(ellipse 55% 35% at ${x}% ${y}%, rgba(124,79,255,0.20), transparent 55%),
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,79,255,0.15), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 15%,  rgba(59,130,246,0.11), transparent 55%),
+        radial-gradient(ellipse 50% 60% at 10% 90%,  rgba(236,72,153,0.09), transparent 55%),
+        #060912
+      `;
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <>
       <div
-        className="absolute inset-0 transition-all duration-300"
-        style={{
-          background: `
-            radial-gradient(circle at ${position.x}% ${position.y}%, rgba(168,85,247,0.22), transparent 18%),
-            radial-gradient(circle at 20% 20%, rgba(59,130,246,0.14), transparent 24%),
-            radial-gradient(circle at 80% 80%, rgba(236,72,153,0.10), transparent 24%),
-            #05070d
-          `,
-        }}
+        ref={meshRef}
+        className="mesh-bg"
+        style={{ transition: "background 0.35s ease" }}
       />
-
-      <div className="space-stars absolute inset-0 opacity-30" />
-    </div>
+      <div className="stars" />
+    </>
   );
 }
